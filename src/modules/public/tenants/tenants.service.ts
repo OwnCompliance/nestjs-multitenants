@@ -15,11 +15,12 @@ export class TenantsService {
   async create(createTenantDto: CreateTenantDto): Promise<Tenant> {
     let tenant = new Tenant();
     tenant.name = createTenantDto.name;
+    tenant.handle = createTenantDto.handle;
 
     tenant = await this.tenantsRepository.save(tenant);
 
-    const schemaName = `tenant_${tenant.id}`;
-    await getManager().query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
+    const schemaName = `tenant_${tenant.id}`; // This could be moved to be the handle
+    await getManager().query(`CREATE DATABASE IF NOT EXISTS ${schemaName}`);
 
     const connection = await getTenantConnection(`${tenant.id}`);
     await connection.runMigrations()

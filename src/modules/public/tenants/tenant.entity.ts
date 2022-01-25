@@ -5,4 +5,7 @@ import { Column, Entity } from 'typeorm';
 export class Tenant extends AbstractEntity {
   @Column()
   name: string;
+
+  @Column()
+  handle: string;
 }

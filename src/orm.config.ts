@@ -3,12 +3,12 @@ import { SnakeNamingStrategy } from './snake-naming.strategy';
 import { join } from 'path';
 
 module.exports = {
-  type: 'postgres',
+  type: 'mysql',
   host: 'localhost',
-  port: 5432,
-  username: 'thomasvanderstraeten',
-  password: 'root',
-  database: 'nestjs-multi-tenant',
+  port: 3306,
+  username: 'root',   // Your Account's Username
+  password: 'root',   // Your Account's Password
+  database: 'nestjs-multi-tenant', // Your "Public" database, this is where all shared data is stored
   namingStrategy: new SnakeNamingStrategy(),
   logging: true,
   autoLoadEntities: true,

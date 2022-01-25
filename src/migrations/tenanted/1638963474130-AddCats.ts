@@ -1,22 +1,22 @@
 import { MigrationInterface } from 'typeorm';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { PostgresQueryRunner } from 'typeorm/driver/postgres/PostgresQueryRunner';
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { MysqlQueryRunner } from 'typeorm/driver/mysql/MysqlQueryRunner';
 
 export class AddCats1638963474130 implements MigrationInterface {
   // eslint-disable-next-line @typescript-eslint/typedef
   name = 'AddCats1638963474130';
 
-  public async up(queryRunner: PostgresQueryRunner): Promise<void> {
-    const { schema } = queryRunner.connection.options as PostgresConnectionOptions;
+  public async up(queryRunner: MysqlQueryRunner): Promise<void> {
+    const { database } = queryRunner.connection.options as MysqlConnectionOptions;
 
     await queryRunner.query(
-      `CREATE TABLE "${schema}"."cats" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "PK_${schema}_4873483882def9ba79ad5ccddbf" PRIMARY KEY ("id"))`,
+      `CREATE TABLE ${database}.cats (id MEDIUMINT NOT NULL AUTO_INCREMENT, created_at TIMESTAMP NOT NULL DEFAULT now(), updated_at TIMESTAMP NOT NULL DEFAULT now(), name tinytext NOT NULL, PRIMARY KEY (id))`,
     );
   }
 
-  public async down(queryRunner: PostgresQueryRunner): Promise<void> {
-    const { schema } = queryRunner.connection.options as PostgresConnectionOptions;
+  public async down(queryRunner: MysqlQueryRunner): Promise<void> {
+    const { database } = queryRunner.connection.options as MysqlConnectionOptions;
 
-    await queryRunner.query(`DROP TABLE "${schema}"."cats"`);
+    await queryRunner.query(`DROP TABLE "${database}"."cats"`);
   }
 }

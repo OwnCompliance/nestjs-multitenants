@@ -1,5 +1,5 @@
 import { Connection, createConnection, getConnectionManager } from 'typeorm';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 
 import * as tenantsOrmconfig from '../../tenants-orm.config';
 
@@ -13,8 +13,8 @@ export function getTenantConnection(tenantId: string): Promise<Connection> {
   }
 
   return createConnection({
-    ...(tenantsOrmconfig as PostgresConnectionOptions),
+    ...(tenantsOrmconfig as MysqlConnectionOptions),
     name: connectionName,
-    schema: connectionName,
+    database: connectionName,
   });
 }
